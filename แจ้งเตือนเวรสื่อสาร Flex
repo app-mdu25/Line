@@ -1,0 +1,186 @@
+function sendFlexMessageToLineGroup() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('สรุปเวรประจำวัน');
+  var lineToken = '8U8bw9rhH+ibzYi43nceVCoxI64+VgYgjsrA2avvsOSQlhlObUU/br/pD4/k7b25XJ2aGYvdR4hzLannuCWAcoeXESnDNjiOK8jXkiycXiYq49+HTqM4K7sDaZtbvvPLhDUnIhfdFdq55M5Bz4K+LAdB04t89/1O/w1cDnyilFU=';
+  var url = 'https://api.line.me/v2/bot/message/push';
+  var groupId = 'C36bbf1e60ab3907370ae3093006c5d02';
+
+  // ดึงข้อมูลจากเซลล์ E2, F2, G2, H2
+  var e2 = sheet.getRange("E2").getValue();
+  var f2 = sheet.getRange("F2").getValue();
+  var g2 = sheet.getRange("G2").getValue();
+  var h2 = sheet.getRange("H2").getValue();
+
+
+  var flexMessage = {
+    "type": "flex",
+    "altText": "แจ้งเตือนเวรสื่อสาร นพค.25",
+    "contents": {
+      "type": "bubble",
+      "size": "giga",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "image",
+        "url": "https://raw.githubusercontent.com/app-mdu25/Line/main/bbn.jpg",
+        "size": "full",
+        "aspectRatio": "3:1",
+        "aspectMode": "cover"
+      }
+    ],
+    "paddingAll": "0%"
+  },
+
+    "hero": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "image",
+        "url": "https://raw.githubusercontent.com/app-mdu25/Line/main/00_background.png",
+        "size": "full",
+        "aspectMode": "cover"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "image",
+            "url": h2,
+            "size": "5xl"
+          }
+        ],
+        "position": "absolute",
+        "cornerRadius": "200px",
+        "offsetStart": "22%",
+        "offsetTop": "5%"
+      }
+    ],
+    "maxHeight": "250px"
+  },
+
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "md",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "เวรสื่อสาร",
+            "size": "xl",
+            "weight": "bold",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": f2,
+            "size": "lg",
+            "weight": "bold",
+            "style": "italic",
+            "align": "center"
+          }
+        ],
+        "margin": "xs"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "xs",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "ประจำ",
+                "weight": "bold"
+              },
+              {
+                "type": "text",
+                "text": e2,
+                "wrap": true,
+                "size": "sm",
+                "color": "#666666",
+                "flex": 4
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "โทร.",
+                "size": "sm",
+                "weight": "bold"
+              },
+              {
+                "type": "text",
+                "text": g2,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "image",
+        "url": "https://raw.githubusercontent.com/app-mdu25/Line/main/191.jpg",
+        "size": "full",
+        "aspectRatio": "16:9"
+      }
+    ],
+    "paddingAll": "0%"
+  }
+
+
+
+
+    }
+  };
+
+  var payload = {
+    "to": groupId,
+    "messages": [flexMessage]
+  };
+
+  var options = {
+    "method": "post",
+    "payload": JSON.stringify(payload),
+    "headers": {
+      "Authorization": "Bearer " + lineToken,
+      "Content-Type": "application/json",
+      "muteHttpExceptions": true
+    }
+  };
+
+  var response = UrlFetchApp.fetch(url, options);
+  Logger.log(response.getContentText());  // ดูผลลัพธ์ของข้อผิดพลาดเพิ่มเติม
+}
+
+
