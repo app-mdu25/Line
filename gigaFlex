@@ -1,0 +1,164 @@
+function sendSimpleFlexMessage() {
+  var lineToken = '8U8bw9rhH+ibzYi43nceVCoxI64+VgYgjsrA2avvsOSQlhlObUU/br/pD4/k7b25XJ2aGYvdR4hzLannuCWAcoeXESnDNjiOK8jXkiycXiYq49+HTqM4K7sDaZtbvvPLhDUnIhfdFdq55M5Bz4K+LAdB04t89/1O/w1cDnyilFU=';
+  var url = 'https://api.line.me/v2/bot/message/push';
+  var groupId = 'C52e6d0af7db020df075e087dd8ac70c0';
+
+  var flexMessage = {
+    "type": "flex",
+    "altText": "This is a Flex Message",
+    "contents": {
+      "type": "bubble",
+      "size": "giga",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "image",
+        "url": "https://raw.githubusercontent.com/app-mdu25/Line/main/bbn.jpg",
+        "size": "full",
+        "aspectRatio": "3:1",
+        "aspectMode": "cover"
+      }
+    ],
+    "paddingAll": "0%"
+  },
+
+    "hero": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "image",
+        "url": "https://raw.githubusercontent.com/app-mdu25/Line/main/00_background.png",
+        "size": "full",
+        "aspectMode": "cover"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "image",
+            "url": "https://raw.githubusercontent.com/app-mdu25/Line/main/537942_0.jpg",
+            "size": "5xl"
+          }
+        ],
+        "position": "absolute",
+        "cornerRadius": "200px",
+        "offsetStart": "22%",
+        "offsetTop": "5%"
+      }
+    ],
+    "maxHeight": "250px"
+  },
+
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "md",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "เวรสื่อสาร",
+            "size": "xl",
+            "weight": "bold",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "จ.ส.อ.ภฤกรณ์ อุทุมภา",
+            "size": "lg",
+            "weight": "bold",
+            "style": "italic",
+            "align": "center"
+          }
+        ],
+        "margin": "xs"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "xs",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "ประจำ",
+                "weight": "bold"
+              },
+              {
+                "type": "text",
+                "text": "วันจันทร์ ที่ 22 กรกฏาคม พ.ศ.2567",
+                "wrap": true,
+                "size": "sm",
+                "color": "#666666",
+                "flex": 4
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "โทร.",
+                "size": "sm",
+                "weight": "bold"
+              },
+              {
+                "type": "text",
+                "text": "0833579455",
+                "color": "#666666",
+                "size": "sm",
+                "flex": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+
+
+
+
+    }
+  };
+
+  var payload = {
+    "to": groupId,
+    "messages": [flexMessage]
+  };
+
+  var options = {
+    "method": "post",
+    "payload": JSON.stringify(payload),
+    "headers": {
+      "Authorization": "Bearer " + lineToken,
+      "Content-Type": "application/json",
+      "muteHttpExceptions": true
+    }
+  };
+
+  var response = UrlFetchApp.fetch(url, options);
+  Logger.log(response.getContentText());  // ดูผลลัพธ์ของข้อผิดพลาดเพิ่มเติม
+}
+
